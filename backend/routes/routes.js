@@ -1,18 +1,21 @@
 const express = require('express');
-const authController = require('../controllers/authController');
 const clienteController = require('../controllers/clienteController');
 const produtoController = require('../controllers/produtoController');
 const pedidoController = require('../controllers/pedidoController');
+const authController = require('../controllers/authController');
 const authMiddleware = require('../middleware/authMiddleware');
-
+const authRoutes = require('./authRoutes');
 const router = express.Router();
 
 // ------------------- Público -------------------
-
+router.get('/clientes', clienteController.getAllClientes);
+router.post('/clientes', clienteController.createCliente);
+router.post('/auth/register', authController.register);
+router.post('/auth/login', authController.login);
 
 // ------------------- Auth -------------------
-router.post('/register', authController.register);
-router.post('/login', authController.login);
+router.use('/auth', authRoutes);
+
 
 
 
@@ -20,10 +23,8 @@ router.post('/login', authController.login);
 
 
 // ------------------- Clientes -------------------
-router.get('/clientes', authMiddleware, clienteController.getAllClientes);
 router.get('/clientes/id/:id', authMiddleware, clienteController.getClienteById);
 router.get('/clientes/nome/:nome', authMiddleware, clienteController.getClienteByName);
-router.post('/clientes', authMiddleware, clienteController.createCliente);
 router.put('/clientes/:id', authMiddleware, clienteController.updateCliente);
 router.delete('/clientes/:id', authMiddleware, clienteController.deleteCliente);
 

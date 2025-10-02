@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard | E-commerce</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <header>
+    <h1>E-commerce</h1>
+    <nav>
+      <button id="logoutBtn">Logout</button>
+    </nav>
+  </header>
+
+  <div class="container">
+    <div class="dashboard-header">
+      <h2>Gerenciamento</h2>
+      <div>
+        <button class="tab-btn active" data-tab="products">Produtos</button>
+        <button class="tab-btn" data-tab="clients">Clientes</button>
+        <button class="tab-btn" data-tab="orders">Pedidos</button>
+      </div>
+    </div>
+    
+    <div id="products" class="tab-content active">
+      <h3>Lista de Produtos</h3>
+      <div class="products-grid" id="productsGrid">
+        </div>
+    </div>
+
+    <div id="clients" class="tab-content">
+      <h3>Lista de Clientes</h3>
+      <div class="clients-list" id="clientsList">
+        </div>
+    </div>
+
+    <div id="orders" class="tab-content">
+      <h3>Lista de Pedidos</h3>
+      <div class="orders-list" id="ordersList">
+        </div>
+    </div>
+  </div>
+
+  <script src="../js/script.js"></script>
+</body>
+</html>

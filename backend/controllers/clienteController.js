@@ -4,16 +4,22 @@ const Cliente = require('../model/Cliente')
 
 async function createCliente(req, res) {
     try {
-        const { nome, email, senha, telefone } = req.body
-        if (!nome || !email || !senha) return res.status(400).json({ message: 'nome, email e senha são obrigatórios' })
-        const cliente = await Cliente.create({ nome, email, senha, telefone })
-        res.status(201).json(cliente)
+      const { nome, email, senha, telefone } = req.body;
+      if (!nome || !email || !senha) return res.status(400).json({ message: 'nome, email e senha são obrigatórios' });
+      
+      const exists = await Cliente.findOne({ where: { email } });
+      if (exists) return res.status(409).json({ message: 'Email já cadastrado' });
+  
+      const hashed = await hashPassword(senha);
+      const cliente = await Cliente.create({ nome, email, senha: hashed, telefone });
+  
+      const { senha: _, ...clienteSemSenha } = cliente.toJSON();
+      res.status(201).json(clienteSemSenha);
     } catch (err) {
-        console.error(err)
-        res.status(500).json({ message: 'Erro ao criar cliente' })
+      console.error(err);
+      res.status(500).json({ message: 'Erro ao criar cliente' });
     }
-}
-
+  }
 
 async function getAllClientes(req, res) {
     try {

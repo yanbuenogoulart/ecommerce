@@ -1,8 +1,8 @@
 const { DataTypes } = require('sequelize');
-const { sequelize } = require('../db/conn');
+const db = require('../db/conn');
 
 
-const Cliente = sequelize.define('Cliente', {
+const Cliente = db.define('Cliente', {
     id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
@@ -27,7 +27,7 @@ const Cliente = sequelize.define('Cliente', {
         type: DataTypes.STRING,
         allowNull: false
     }
-}, {timeStamp: false});
+}, {timestamps: false});
 
 
 module.exports = Cliente;

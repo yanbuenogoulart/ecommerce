@@ -1,26 +1,23 @@
-const express = require('express');
-const cors = require('cors');
-const routes = require('./routes/routes');
-const sequelize = require('./db/conn');
-const { Cliente, Pedido, Produto } = require('./model/rel');
-require('dotenv').config();
+const express =require('express')
+const cors = require('cors')
+const app = express()
+require('dotenv').config()
+const port = process.env.PORT || 3000
+const routes = require('./routes/routes')
+const conn = require('./db/conn')
 
-const app = express();
-const PORT = process.env.PORT || 3000;
+app.use(cors())
+app.use(express.json())
+app.use(express.urlencoded({extended:true}))
 
-app.use(cors());
-app.use(express.json());
+app.use(routes)
 
-app.use('/api', routes);
+app.get('/', (req,res)=> {
+    res.send('API is running')
+})
 
-app.get('/', (req, res) => res.send('API rodando'));
-
-async function start() {
-  await testConnection();
-
-  await sequelize.sync({ alter: true });
-
-  app.listen(PORT, () => console.log(`Servidor rodando na porta ${PORT}`));
-}
-
-start();
+conn.sync().then(()=> {
+    app.listen(port, 'localhost', ()=> {
+        console.log(`Servidor rodando em http://localhost:${port}`)
+    })
+})

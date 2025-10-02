@@ -1,16 +1,15 @@
 const { Cliente, Pedido, Produto } = require('./model/rel');
-const { sequelize, testConnection } = require('./db/conn');
+const db = require('./db/conn');
 
-const sync = async () => {
+async function sync() {
     try {
-        await testConnection();
-        await sequelize.sync({ force: true });
+        await db.sync({ force: true });
         console.log('Banco sincronizado!');
     } catch (error) {
         console.error(error);
     } finally {
-        await sequelize.close();
+        await db.close();
     }
-};
+}
 
-sync();
+sync()

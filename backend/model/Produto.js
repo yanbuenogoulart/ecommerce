@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
-const { sequelize } = require('../db');
+const db = require('../db/conn');
 
-const Produto = sequelize.define('Produto', {
+const Produto = db.define('Produto', {
     id: {
         type: DataTypes.INTEGER.UNSIGNED,
         autoIncrement: true,

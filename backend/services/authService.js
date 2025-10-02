@@ -1,17 +1,18 @@
+// services/authService.js
+const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
-require('dotenv').config();
+const Cliente = require('../model/Cliente');
 
-const JWT_SECRET = process.env.JWT_SECRET || 'troque_essa_chave';
+const JWT_SECRET = process.env.JWT_SECRET || 'secret';
 const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || '1d';
 
 async function hashPassword(password) {
-  const saltRounds = 10;
-  return await bcrypt.hash(password, saltRounds);
+  const salt = await bcrypt.genSalt(10);
+  return bcrypt.hash(password, salt);
 }
 
-async function comparePassword(password, hashed) {
-  return await bcrypt.compare(password, hashed);
+async function comparePassword(plain, hashed) {
+  return bcrypt.compare(plain, hashed);
 }
 
 function generateToken(payload) {
@@ -22,4 +23,19 @@ function verifyToken(token) {
   return jwt.verify(token, JWT_SECRET);
 }
 
-module.exports = { hashPassword, comparePassword, generateToken, verifyToken };
+async function findUserByEmail(email) {
+  return Cliente.findOne({ where: { email } });
+}
+
+async function findUserById(id) {
+  return Cliente.findByPk(id);
+}
+
+module.exports = {
+  hashPassword,
+  comparePassword,
+  generateToken,
+  verifyToken,
+  findUserByEmail,
+  findUserById
+};

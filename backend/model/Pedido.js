@@ -1,5 +1,5 @@
-const { DataTypes } = require('sequelize');
-const db = require('../db/conn');
+const { DataTypes } = require('sequelize')
+const db = require('../db/conn')
 
 const Pedido = db.define('Pedido', {
   id: {
@@ -17,9 +17,9 @@ const Pedido = db.define('Pedido', {
     allowNull: false
   },
   dataPedido: {
-    type: DataTypes.DATE,
+    type: DataTypes.DATEONLY,
     defaultValue: DataTypes.NOW
   }
-});
+}, {timestamps: false, tableName: 'pedidos'})
 
-module.exports = Pedido;
+module.exports = Pedido

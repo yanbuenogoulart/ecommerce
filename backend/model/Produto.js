@@ -1,5 +1,5 @@
-const { DataTypes } = require('sequelize');
-const db = require('../db/conn');
+const { DataTypes } = require('sequelize')
+const db = require('../db/conn')
 
 const Produto = db.define('Produto', {
     id: {
@@ -23,6 +23,6 @@ const Produto = db.define('Produto', {
         type: DataTypes.INTEGER,
         defaultValue: 0
     }
-});
+}, {timestamps: false, tableName: 'produtos'})
 
-module.exports = Produto;
+module.exports = Produto

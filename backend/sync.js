@@ -1,4 +1,4 @@
-const { Cliente, Pedido, Produto } = require('./model/rel');
+const { Cliente, Pedido, Produto, Endereco, Telefone, Estoque } = require('./model/rel');
 const db = require('./db/conn');
 
 async function sync() {
